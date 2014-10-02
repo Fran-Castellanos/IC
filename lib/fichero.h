@@ -1,19 +1,11 @@
 
 
 
+#include <stdio.h>
 
 
 
-
-void guardar_fichero(char* nombreFichero)
-{
-
-
-
-
-
-}
-
+void guardar_en_fichero(FILE*, char*);
 
 
 

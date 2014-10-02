@@ -14,12 +14,16 @@
 
 #include "cuerpo.h"
 
+
 typedef struct
 {
 	float velocidad; //Velocidad inicial
 	int numeroCuerpos; //Número de cuerpos
+	int numeroMovimientos; //Número de movimientos de los cuerpos
 	TCuerpo* cuerpos; //Posiciones de los cuerpos
+
 }TParametros;
+
 
 
 void rellenar_parametros(TParametros*);
@@ -63,11 +67,23 @@ int main(int argc, char *argv[]){
  */
 void ejecutar(TParametros* param)
 {
+	char* linea = "prueba"; //Texto de prueba
+	FILE* fichero;
+	fichero = fopen ( "posiciones.txt", "w");
+
+
+	int i;
+	for(i=0; i<param->numeroMovimientos;i++)
+	{
+		guardar_en_fichero(fichero,linea);
+		guardar_en_fichero(fichero,"\n");
+	}
 
 
 
 
 
+	fclose(fichero);
 }
 
 
@@ -84,6 +100,8 @@ void imprimir(TParametros* param)
 	{
 		printf("\tCuerpo %d: %d , %d\n",i, param->cuerpos[i].posicion.x, param->cuerpos[i].posicion.y);
 	}
+	printf("El numero de movimientos es: %d", param->numeroMovimientos);
+
 }
 
 
@@ -102,7 +120,7 @@ void liberar(TParametros* param)
  */
 void rellenar_parametros(TParametros* param)
 {
-	int numeroCuerpos;
+	int numeroCuerpos, numeroMovimientos;
 	float velocidad;
 	TCoordenada coord;
 	TCuerpo* cuerpos;
@@ -159,9 +177,24 @@ void rellenar_parametros(TParametros* param)
 
 	}while(velocidad<=0);
 
+
+	//Número de iteraciones
+		do{
+			printf("Numero de movimientos de los cuerpos (>0): ");
+
+			scanf("%d",&numeroMovimientos);
+
+			if(numeroMovimientos<=0){
+				printf("El numero de movimientos no es correcto. Vuelva a intentarlo\n");
+
+			}
+
+		}while(numeroMovimientos<=0);
+
 	//Vuelca los valores en la estructura de tipo TParametros.
 	param->numeroCuerpos = numeroCuerpos;
 	param->velocidad = velocidad;
 	param->cuerpos = cuerpos;
+	param->numeroMovimientos = numeroMovimientos;
 
 }
