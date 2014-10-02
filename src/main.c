@@ -21,6 +21,7 @@ typedef struct
 	int numeroCuerpos; //Número de cuerpos
 	int numeroMovimientos; //Número de movimientos de los cuerpos
 	TCuerpo* cuerpos; //Posiciones de los cuerpos
+	TGravedad gravedad; //Punto de gravedad
 
 }TParametros;
 
@@ -100,8 +101,8 @@ void imprimir(TParametros* param)
 	{
 		printf("\tCuerpo %d: %d , %d\n",i, param->cuerpos[i].posicion.x, param->cuerpos[i].posicion.y);
 	}
-	printf("El numero de movimientos es: %d", param->numeroMovimientos);
-
+	printf("El numero de movimientos es: %d\n", param->numeroMovimientos);
+	printf("La fuerza de gravedad es: %f\n", param->gravedad.fuerza);
 }
 
 
@@ -121,7 +122,8 @@ void liberar(TParametros* param)
 void rellenar_parametros(TParametros* param)
 {
 	int numeroCuerpos, numeroMovimientos;
-	float velocidad;
+	float velocidad, fuerza;
+	TGravedad gravedad;
 	TCoordenada coord;
 	TCuerpo* cuerpos;
 	TCuerpo cuerpo;
@@ -179,22 +181,29 @@ void rellenar_parametros(TParametros* param)
 
 
 	//Número de iteraciones
-		do{
-			printf("Numero de movimientos de los cuerpos (>0): ");
+	do{
+		printf("Numero de movimientos de los cuerpos (>0): ");
+		scanf("%d",&numeroMovimientos);
 
-			scanf("%d",&numeroMovimientos);
+		if(numeroMovimientos<=0){
+			printf("El numero de movimientos no es correcto. Vuelva a intentarlo\n");
 
-			if(numeroMovimientos<=0){
-				printf("El numero de movimientos no es correcto. Vuelva a intentarlo\n");
+		}
 
-			}
+	}while(numeroMovimientos<=0);
 
-		}while(numeroMovimientos<=0);
+
+	//Fuerza de gravedad
+	printf("Fuerza de gravedad: ");
+	scanf("%f",&fuerza);
+	gravedad.fuerza = fuerza;
+
 
 	//Vuelca los valores en la estructura de tipo TParametros.
 	param->numeroCuerpos = numeroCuerpos;
 	param->velocidad = velocidad;
 	param->cuerpos = cuerpos;
 	param->numeroMovimientos = numeroMovimientos;
+	param->gravedad = gravedad;
 
 }
