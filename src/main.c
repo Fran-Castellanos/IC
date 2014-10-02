@@ -11,7 +11,7 @@
 #include "coordenadas.h"
 #include "gravedad.h"
 #include "fichero.h"
-
+#include "interfaz.h"
 #include "cuerpo.h"
 
 
@@ -116,87 +116,45 @@ void liberar(TParametros* param)
 
 
 
+
+
+
 /**
  * Rellena los parámetros necesarios para la ejecución del programa
  */
 void rellenar_parametros(TParametros* param)
 {
-	int numeroCuerpos, numeroMovimientos;
+	int numeroCuerpos, numeroMovimientos, i;
 	float velocidad, fuerza;
 	TGravedad gravedad;
 	TCoordenada coord;
 	TCuerpo* cuerpos;
 	TCuerpo cuerpo;
-	coord.y = 0;
-	int i;
+	coord.y = 0; //Inicializa coordenada 'y' de cuerpos a 0
+
 	//Número de cuerpos
-	do
-	{
-		printf("Numero de cuerpos (>0): ");
+	numeroCuerpos = numero_cuerpos();
 
-		scanf("%d",&numeroCuerpos);
-
-
-		if(numeroCuerpos<=0)
-		{
-			printf("El valor del numero de cuerpos no es correcto. Vuelva a intentarlo\n");
-
-		}
-	}while(numeroCuerpos<=0);
-
-	cuerpos = (TCuerpo *)malloc (numeroCuerpos * sizeof(TCuerpo)); //Array dinámico de posiciones de los cuerpos
+	//Array dinámico de posiciones de los cuerpos
+	cuerpos = (TCuerpo *)malloc (numeroCuerpos * sizeof(TCuerpo));
 
 	//Establecer posición de cada cuerpo
 	for(i=0; i<numeroCuerpos; i++)
 	{
-		do{
-			printf("Posicion inicial del cuerpo %d. Eje X: ",i);
-			coord.x=0;
-			scanf("%d",&coord.x);
-
-			if(coord.x<0)
-			{
-				printf("Valor de la posicion inicial incorrecto. Vuelva a intentarlo\n");
-			}
-
-		}while(coord.x<0);
-		cuerpo.posicion = coord;
+		cuerpo.posicion = coordenada_cuerpo(i);
 		cuerpos[i]=cuerpo;
-
 	}
 
-
 	//Velocidad inicial
-	do{
-		printf("Velocidad inicial de los cuerpos (>0): ");
-
-		scanf("%f",&velocidad);
-
-		if(velocidad<=0){
-			printf("El valor de la velocidad no es correcto. Vuelva a intentarlo\n");
-
-		}
-
-	}while(velocidad<=0);
+	velocidad = velocidad_inicial();
 
 
 	//Número de iteraciones
-	do{
-		printf("Numero de movimientos de los cuerpos (>0): ");
-		scanf("%d",&numeroMovimientos);
-
-		if(numeroMovimientos<=0){
-			printf("El numero de movimientos no es correcto. Vuelva a intentarlo\n");
-
-		}
-
-	}while(numeroMovimientos<=0);
+	numeroMovimientos = numero_movimientos();
 
 
 	//Fuerza de gravedad
-	printf("Fuerza de gravedad: ");
-	scanf("%f",&fuerza);
-	gravedad.fuerza = fuerza;
+	gravedad.fuerza = fuerza_gravedad();
 
 
 	//Vuelca los valores en la estructura de tipo TParametros.
