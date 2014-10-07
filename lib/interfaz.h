@@ -8,6 +8,8 @@
 #define LIB_INTERFAZ_H_
 
 
+#include "cuerpo.h"
+
 // Pide numero de cuerpos al usuario
 int numero_cuerpos();
 
@@ -26,6 +28,10 @@ int numero_movimientos();
 
 // Pide fuerza de gravedad al usuario
 float fuerza_gravedad();
+
+
+char* imprimir(TCuerpo*);
+
 
 
 

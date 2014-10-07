@@ -1,5 +1,6 @@
 
-
+#ifndef LIB_CUERPO_H_
+#define LIB_CUERPO_H_
 
 #include "coordenadas.h"
 
@@ -8,3 +9,8 @@ typedef struct{
 
 }TCuerpo;
 
+
+
+
+
+#endif /* LIB_CUERPO_H_ */

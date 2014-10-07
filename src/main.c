@@ -30,7 +30,7 @@ typedef struct
 void rellenar_parametros(TParametros*);
 void ejecutar(TParametros*);
 void liberar(TParametros*);
-void imprimir(TParametros*);
+void imprimir_parametros(TParametros*);
 
 
 
@@ -43,15 +43,11 @@ int main(int argc, char *argv[]){
 	rellenar_parametros(&param);
 
 
-
-
 	ejecutar(&param);
 
 
-
-
 	//TODO Imprime los parámetros iniciales para comprobar que funciona bien
-	imprimir(&param);
+	imprimir_parametros(&param);
 
 
 
@@ -68,16 +64,25 @@ int main(int argc, char *argv[]){
  */
 void ejecutar(TParametros* param)
 {
-	char* linea = "prueba"; //Texto de prueba
+	char* linea = ""; //Texto de prueba
 	FILE* fichero;
 	fichero = fopen ( "posiciones.txt", "w");
 
 
-	int i;
+
+
+
+	int i,c;
 	for(i=0; i<param->numeroMovimientos;i++)
 	{
-		guardar_en_fichero(fichero,linea);
-		guardar_en_fichero(fichero,"\n");
+		for (c=0; c<param->numeroCuerpos; c++){
+			aplicar_gravedad(&param->cuerpos[c], &param->gravedad);
+			imprimir(&param->cuerpos[c]);
+
+			guardar_en_fichero(fichero,linea);
+			guardar_en_fichero(fichero,"\n");
+		}
+
 	}
 
 
@@ -90,7 +95,7 @@ void ejecutar(TParametros* param)
 
 
 
-void imprimir(TParametros* param)
+void imprimir_parametros(TParametros* param)
 {
 	int i;
 	printf("\nDatos:\n");
@@ -104,6 +109,9 @@ void imprimir(TParametros* param)
 	printf("El numero de movimientos es: %d\n", param->numeroMovimientos);
 	printf("La fuerza de gravedad es: %f\n", param->gravedad.fuerza);
 }
+
+
+
 
 
 /*
@@ -125,12 +133,11 @@ void liberar(TParametros* param)
 void rellenar_parametros(TParametros* param)
 {
 	int numeroCuerpos, numeroMovimientos, i;
-	float velocidad, fuerza;
+	float velocidad;
 	TGravedad gravedad;
-	TCoordenada coord;
 	TCuerpo* cuerpos;
 	TCuerpo cuerpo;
-	coord.y = 0; //Inicializa coordenada 'y' de cuerpos a 0
+
 
 	//Número de cuerpos
 	numeroCuerpos = numero_cuerpos();

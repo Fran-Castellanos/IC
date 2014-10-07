@@ -1,7 +1,7 @@
 
-#ifndef COORDENADA_H
+#ifndef LIB_COORDENADAS_H_
+#define LIB_COORDENADAS_H_
 
-	#define COORDENADA_H
 
 	typedef struct
 	{
@@ -10,4 +10,4 @@
 	}TCoordenada;
 
 
-#endif
+#endif /* LIB_COORDENADAS_H_ */

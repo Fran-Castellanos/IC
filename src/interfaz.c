@@ -9,6 +9,7 @@
 #include "coordenadas.h"
 #include "interfaz.h"
 #include <stdio.h>
+#include "stdlib.h"
 
 /**
  * Pide numero de cuerpos al usuario
@@ -96,3 +97,23 @@ float fuerza_gravedad()
 	scanf("%f",&fuerza);
 	return fuerza;
 }
+
+
+
+
+char* imprimir(TCuerpo* cuerpo){
+
+	char aux[100];
+	char linea [100] = "";
+	itoa(cuerpo->posicion.x, aux, 10 );
+	strcat(linea, aux);
+	strcat(linea, ",");
+	itoa(cuerpo->posicion.y, aux, 10);
+	strcat(linea,aux);
+	strcat(linea, "\t");
+
+	return linea;
+}
+
+
+
