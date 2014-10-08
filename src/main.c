@@ -43,6 +43,7 @@ int main(int argc, char *argv[]){
 	rellenar_parametros(&param);
 
 
+
 	ejecutar(&param);
 
 
@@ -76,8 +77,8 @@ void ejecutar(TParametros* param)
 	for(i=0; i<param->numeroMovimientos;i++)
 	{
 		for (c=0; c<param->numeroCuerpos; c++){
-			aplicar_gravedad(&param->cuerpos[c], &param->gravedad);
-			imprimir(&param->cuerpos[c]);
+			aplicar_gravedad(&(param->cuerpos[c]), &(param->gravedad));
+			linea = imprimir(&(param->cuerpos[c]));
 
 			guardar_en_fichero(fichero,linea);
 			guardar_en_fichero(fichero,"\n");
@@ -132,7 +133,7 @@ void liberar(TParametros* param)
  */
 void rellenar_parametros(TParametros* param)
 {
-	int numeroCuerpos, numeroMovimientos, i;
+	int numeroCuerpos, numeroMovimientos, i, pos_mayor=1;
 	float velocidad;
 	TGravedad gravedad;
 	TCuerpo* cuerpos;
@@ -149,6 +150,8 @@ void rellenar_parametros(TParametros* param)
 	for(i=0; i<numeroCuerpos; i++)
 	{
 		cuerpo.posicion = coordenada_cuerpo(i);
+		if(pos_mayor < abs(cuerpo.posicion.x))
+			pos_mayor = abs(cuerpo.posicion.x);
 		cuerpos[i]=cuerpo;
 	}
 
@@ -162,6 +165,8 @@ void rellenar_parametros(TParametros* param)
 
 	//Fuerza de gravedad
 	gravedad.fuerza = fuerza_gravedad();
+	gravedad.posicion.y = pos_mayor*10;
+	gravedad.posicion.x = pos_mayor*10;
 
 
 	//Vuelca los valores en la estructura de tipo TParametros.
