@@ -13,8 +13,23 @@
 
 	typedef struct
 	{
-		TCoordenada componentes;
+		TCoordenada coordenadas;
+
 	}TVector;
+
+
+
+
+
+	TVector sumar_vectores(TVector, TVector);
+
+	float obtener_modulo(TVector);
+
+
+
+
+
+
 
 
 #endif /* LIB_VECTOR_H_ */

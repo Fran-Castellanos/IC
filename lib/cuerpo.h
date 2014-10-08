@@ -3,9 +3,11 @@
 #define LIB_CUERPO_H_
 
 #include "coordenadas.h"
+#include "vector.h"
 
 typedef struct{
 	TCoordenada posicion;
+	TVector vector;
 
 }TCuerpo;
 

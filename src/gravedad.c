@@ -3,52 +3,55 @@
 #include <math.h>
 #include "gravedad.h"
 
+#include "vector.h"
 #include <stdio.h>
 
-void aplicar_gravedad(TCuerpo* cuerpo, TGravedad* gravedad)
+void aplicar_gravedad(TCuerpo* cuerpo, TGravedad* gravedad, int tam)
 {
-	float m = (cuerpo->posicion.y - gravedad->posicion.y)
-				  /
-				  (cuerpo->posicion.x - gravedad->posicion.x);
+	//Calcula vector de gravedad con respecto al cuerpo
+	gravedad->vector.coordenadas.x = -cuerpo->posicion.x + gravedad->posicion.x;
+	gravedad->vector.coordenadas.y = -cuerpo->posicion.y + gravedad->posicion.y;
 
-	//printf("\nm: %f", m);
-	float fuerza_x = gravedad_x(cuerpo, gravedad, m);
-	float fuerza_y = gravedad_y(cuerpo, gravedad, m);
 
-	//printf("\nx: %f", fuerza_x);
-	//printf("\ny: %f", fuerza_y);
-	cuerpo->posicion.x = cuerpo->posicion.x*fuerza_x*0.001;
-	cuerpo->posicion.y = cuerpo->posicion.y*fuerza_y*0.001;
 
-	//printf("\nCuerpox: %d", cuerpo->posicion.x);
-	//printf("\nCuerpoy: %d", cuerpo->posicion.y);
+
+
+	TVector v = sumar_vectores(cuerpo->vector, gravedad->vector);
+
+	cuerpo->vector.coordenadas.x = v.coordenadas.x;
+	cuerpo->vector.coordenadas.y = v.coordenadas.y;
+
+	float incremento_x = gravedad_x(cuerpo, gravedad, tam);
+	float incremento_y = gravedad_y(cuerpo, gravedad, tam);
+
+	cuerpo->posicion.x = cuerpo->posicion.x + incremento_x;
+	cuerpo->posicion.y = cuerpo->posicion.y + incremento_y;
+
+
 
 }
 
 
 
-float gravedad_x(TCuerpo* cuerpo, TGravedad* gravedad, float m){
-	float G = gravedad->fuerza;
+float gravedad_x(TCuerpo* cuerpo, TGravedad* gravedad, int tam){
+	int incremento;
+
+	incremento = cuerpo->vector.coordenadas.x/tam;
 
 
-	float fuerza = sqrt(pow(gravedad->posicion.x - cuerpo->posicion.x,2)
-				+
-				(pow(gravedad->posicion.y - cuerpo->posicion.y,2))) * cos(atan(0-m)) *G;
 
-
-	return fuerza;
+	return incremento;
 }
 
 
 
-float gravedad_y(TCuerpo* cuerpo, TGravedad* gravedad, float m)
+float gravedad_y(TCuerpo* cuerpo, TGravedad* gravedad, int tam)
 {
-	float G = gravedad->fuerza;
+	int incremento;
 
-	float fuerza = sqrt(pow(gravedad->posicion.x - cuerpo->posicion.x,2)
-			+
-			(pow(gravedad->posicion.y - cuerpo->posicion.y,2))) * cos(atan(-2-m))*G;
+	incremento = cuerpo->vector.coordenadas.y/tam;
 
-	return fuerza;
+
+	return incremento;
 
 }

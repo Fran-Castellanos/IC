@@ -11,15 +11,16 @@
 
 typedef struct{
 	TCoordenada posicion;
+	TVector vector;
 	float fuerza;
 }TGravedad;
 
 
 
 
-void aplicar_gravedad(TCuerpo*, TGravedad*);
-float gravedad_x(TCuerpo*, TGravedad*, float);
-float gravedad_y(TCuerpo*, TGravedad*, float);
+void aplicar_gravedad(TCuerpo*, TGravedad*, int);
+float gravedad_x(TCuerpo*, TGravedad*, int);
+float gravedad_y(TCuerpo*, TGravedad*, int);
 
 
 #endif /* LIB_GRAVEDAD_H_ */

@@ -6,7 +6,6 @@
  */
 
 
-#include "coordenadas.h"
 #include "interfaz.h"
 #include <stdio.h>
 #include "stdlib.h"
@@ -101,14 +100,14 @@ float fuerza_gravedad()
 
 
 
-char* imprimir(TCuerpo* cuerpo){
+char* imprimir(TCoordenada* coord){
 
 	char aux[100];
 	char linea [100] = "";
-	itoa(cuerpo->posicion.x, aux, 10 );
-	strcat(linea, aux);
+	itoa(coord->x, linea, 10 );
+
 	strcat(linea, ",");
-	itoa(cuerpo->posicion.y, aux, 10);
+	itoa(coord->y, aux, 10);
 	strcat(linea,aux);
 	strcat(linea, "\t");
 

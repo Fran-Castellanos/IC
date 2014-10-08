@@ -9,6 +9,7 @@
 
 
 #include "cuerpo.h"
+#include "coordenadas.h"
 
 // Pide numero de cuerpos al usuario
 int numero_cuerpos();
@@ -30,7 +31,7 @@ int numero_movimientos();
 float fuerza_gravedad();
 
 
-char* imprimir(TCuerpo*);
+char* imprimir(TCoordenada*);
 
 
 
