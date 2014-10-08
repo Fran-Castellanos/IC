@@ -44,13 +44,13 @@ int main(int argc, char *argv[]){
 	TParametros param;
 	rellenar_parametros(&param);
 
-
+	//TODO Imprime los parámetros iniciales para comprobar que funciona bien
+	imprimir_parametros(&param);
 
 	ejecutar(&param);
 
 
-	//TODO Imprime los parámetros iniciales para comprobar que funciona bien
-	imprimir_parametros(&param);
+
 
 
 
@@ -62,24 +62,25 @@ int main(int argc, char *argv[]){
 
 
 
+
+
+
+
 /*
  * Ejecución principal del programa
  */
 void ejecutar(TParametros* param)
 {
+	int tam = 0;
 	char *linea = ""; //Texto de prueba
 	FILE* fichero;
 	fichero = fopen ( "posiciones.txt", "w");
 
 	linea = malloc(100);
 
-	 //------------------------------Tamaño del tablero----------------------------
-	itoa(param->tam,linea,10);
 
-	guardar_en_fichero(fichero,linea);
-	guardar_en_fichero(fichero,"\n");
 
-	strcpy(linea, "");
+
 
 	 //--------------------------------Número de cuerpos---------------------------
 	itoa(param->numeroCuerpos,linea,10);
@@ -94,11 +95,17 @@ void ejecutar(TParametros* param)
 	guardar_en_fichero(fichero,linea);
 	guardar_en_fichero(fichero,"\n");
 
+	tam = (abs(param->gravedad.posicion.x) > abs(param->gravedad.posicion.y))? abs(param->gravedad.posicion.x) : abs(param->gravedad.posicion.y);
+
 	int i,c;
 	for(i=0; i<param->numeroMovimientos;i++)
 	{
 		strcpy(linea,"");
 		for (c=0; c<param->numeroCuerpos; c++){
+
+			tam = (abs(param->cuerpos[c].posicion.x) > tam)? abs(param->cuerpos[c].posicion.x) : tam;
+			tam = (abs(param->cuerpos[c].posicion.y) > tam)? abs(param->cuerpos[c].posicion.y) : tam;
+
 			strcat(linea, imprimir(&(param->cuerpos[c].posicion)));
 			if(strlen(linea) > 100)
 				linea = malloc(sizeof(linea)+100);
@@ -110,6 +117,13 @@ void ejecutar(TParametros* param)
 		guardar_en_fichero(fichero,"\n");
 
 	}
+
+	 //------------------------------Tamaño del tablero----------------------------
+	strcpy(linea, "");
+	itoa(tam*1.20,linea,10);
+
+	guardar_en_fichero(fichero,linea);
+	guardar_en_fichero(fichero,"\n");
 
 	free(linea);
 
@@ -196,8 +210,8 @@ void rellenar_parametros(TParametros* param)
 
 	//Fuerza de gravedad
 	gravedad.fuerza = fuerza_gravedad();
-	gravedad.posicion.y = pos_mayor*10;
-	gravedad.posicion.x = pos_mayor*10;
+	gravedad.posicion.y = pos_mayor*3;
+	gravedad.posicion.x = pos_mayor*3;
 
 
 
@@ -207,5 +221,5 @@ void rellenar_parametros(TParametros* param)
 	param->cuerpos = cuerpos;
 	param->numeroMovimientos = numeroMovimientos;
 	param->gravedad = gravedad;
-	param->tam = pos_mayor*10*2;
+	param->tam = pos_mayor*3*2;
 }
