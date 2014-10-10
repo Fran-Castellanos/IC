@@ -18,8 +18,8 @@ TVector sumar_vectores(TVector v1, TVector v2)
 {
 	TVector v3;
 
-	v3.coordenadas.x = v1.coordenadas.x + v2.coordenadas.y;
-	v3.coordenadas.y = v1.coordenadas.y + v2.coordenadas.y;
+	v3.x = v1.x + v2.x;
+	v3.y = v1.y + v2.y;
 
 	return v3;
 }
@@ -28,7 +28,7 @@ TVector sumar_vectores(TVector v1, TVector v2)
 
 float obtener_modulo(TVector v)
 {
-	return sqrt(pow(v.coordenadas.x,2) + pow(v.coordenadas.y,2));
+	return sqrt(pow(v.x,2) + pow(v.y,2));
 }
 
 

@@ -1,5 +1,5 @@
 /*
- * Pr·cticas 1 y 2 IC
+ * Pr√°cticas 1 y 2 IC
  * Problema de los N cuerpos.
  * Lenguaje: C
  */
@@ -19,11 +19,11 @@
 typedef struct
 {
 	float velocidad; //Velocidad inicial
-	int numeroCuerpos; //N˙mero de cuerpos
-	int numeroMovimientos; //N˙mero de movimientos de los cuerpos
+	int numeroCuerpos; //N√∫mero de cuerpos
+	int numeroMovimientos; //N√∫mero de movimientos de los cuerpos
 	TCuerpo* cuerpos; //Posiciones de los cuerpos
 	TGravedad gravedad; //Punto de gravedad
-	int tam; //TamaÒo del tablero
+	int tam; //Tama√±o del tablero
 
 }TParametros;
 
@@ -37,14 +37,14 @@ void imprimir_parametros(TParametros*);
 
 
 /*
- * FunciÛn principal
+ * Funci√≥n principal
  */
 int main(int argc, char *argv[]){
 
 	TParametros param;
 	rellenar_parametros(&param);
 
-	//TODO Imprime los par·metros iniciales para comprobar que funciona bien
+	//TODO Imprime los par√°metros iniciales para comprobar que funciona bien
 	imprimir_parametros(&param);
 
 	ejecutar(&param);
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
 
 
 
-	liberar(&param); //Libera memoria din·mica de par·metros
+	liberar(&param); //Libera memoria din√°mica de par√°metros
 
 	return 0;
 }
@@ -67,11 +67,11 @@ int main(int argc, char *argv[]){
 
 
 /*
- * EjecuciÛn principal del programa
+ * Ejecuci√≥n principal del programa
  */
 void ejecutar(TParametros* param)
 {
-	int tam = 0;
+	//int tam = 0;
 	char *linea = ""; //Texto de prueba
 	FILE* fichero;
 	fichero = fopen ( "posiciones.txt", "w");
@@ -82,7 +82,7 @@ void ejecutar(TParametros* param)
 
 
 
-	 //--------------------------------N˙mero de cuerpos---------------------------
+	 //--------------------------------N√∫mero de cuerpos---------------------------
 	itoa(param->numeroCuerpos,linea,10);
 
 	guardar_en_fichero(fichero,linea);
@@ -91,11 +91,11 @@ void ejecutar(TParametros* param)
 
 	strcpy(linea, imprimir(&(param->gravedad.posicion)));
 
-	 //------------------------PosiciÛn del punto de gravedad----------------------
+	 //------------------------Posici√≥n del punto de gravedad----------------------
 	guardar_en_fichero(fichero,linea);
 	guardar_en_fichero(fichero,"\n");
 
-	tam = (abs(param->gravedad.posicion.x) > abs(param->gravedad.posicion.y))? abs(param->gravedad.posicion.x) : abs(param->gravedad.posicion.y);
+//	tam = (abs(param->gravedad.posicion.x) > abs(param->gravedad.posicion.y))? abs(param->gravedad.posicion.x) : abs(param->gravedad.posicion.y);
 
 	int i,c;
 	for(i=0; i<param->numeroMovimientos;i++)
@@ -103,8 +103,8 @@ void ejecutar(TParametros* param)
 		strcpy(linea,"");
 		for (c=0; c<param->numeroCuerpos; c++){
 
-			tam = (abs(param->cuerpos[c].posicion.x) > tam)? abs(param->cuerpos[c].posicion.x) : tam;
-			tam = (abs(param->cuerpos[c].posicion.y) > tam)? abs(param->cuerpos[c].posicion.y) : tam;
+			//tam = (abs(param->cuerpos[c].posicion.x) > tam)? abs(param->cuerpos[c].posicion.x) : tam;
+			//tam = (abs(param->cuerpos[c].posicion.y) > tam)? abs(param->cuerpos[c].posicion.y) : tam;
 
 			strcat(linea, imprimir(&(param->cuerpos[c].posicion)));
 			if(strlen(linea) > 100)
@@ -118,9 +118,9 @@ void ejecutar(TParametros* param)
 
 	}
 
-	 //------------------------------TamaÒo del tablero----------------------------
+	 //------------------------------Tama√±o del tablero----------------------------
 	strcpy(linea, "");
-	itoa(tam*1.20,linea,10);
+	itoa(1000,linea,10);
 
 	guardar_en_fichero(fichero,linea);
 	guardar_en_fichero(fichero,"\n");
@@ -155,11 +155,11 @@ void imprimir_parametros(TParametros* param)
 
 
 /*
- * Libera memoria din·mica (cuerpos)
+ * Libera memoria din√°mica (cuerpos)
  */
 void liberar(TParametros* param)
 {
-	free(param->cuerpos); //Libera memoria din·mica
+	free(param->cuerpos); //Libera memoria din√°mica
 }
 
 
@@ -168,7 +168,7 @@ void liberar(TParametros* param)
 
 
 /**
- * Rellena los par·metros necesarios para la ejecuciÛn del programa
+ * Rellena los par√°metros necesarios para la ejecuci√≥n del programa
  */
 void rellenar_parametros(TParametros* param)
 {
@@ -179,22 +179,22 @@ void rellenar_parametros(TParametros* param)
 	TCuerpo cuerpo;
 
 
-	//N˙mero de cuerpos
+	//N√∫mero de cuerpos
 	numeroCuerpos = numero_cuerpos();
 
 	//Velocidad inicial
 	velocidad = velocidad_inicial();
 
-	//Array din·mico de posiciones de los cuerpos
+	//Array din√°mico de posiciones de los cuerpos
 	cuerpos = (TCuerpo *)malloc (numeroCuerpos * sizeof(TCuerpo));
 
-	//Establecer posiciÛn de cada cuerpo
+	//Establecer posici√≥n de cada cuerpo
 	for(i=0; i<numeroCuerpos; i++)
 	{
 		cuerpo.posicion = coordenada_cuerpo(i);
 
-		cuerpo.vector.coordenadas.x = velocidad; //Inicializa vector movimiento
-		cuerpo.vector.coordenadas.y = 0;
+		cuerpo.vector.y = velocidad; //Inicializa vector movimiento
+		cuerpo.vector.x = 0;
 
 		if(pos_mayor < abs(cuerpo.posicion.x))
 			pos_mayor = abs(cuerpo.posicion.x);
@@ -204,14 +204,14 @@ void rellenar_parametros(TParametros* param)
 
 
 
-	//N˙mero de iteraciones
+	//N√∫mero de iteraciones
 	numeroMovimientos = numero_movimientos();
 
 
 	//Fuerza de gravedad
 	gravedad.fuerza = fuerza_gravedad();
-	gravedad.posicion.y = pos_mayor*3;
-	gravedad.posicion.x = pos_mayor*3;
+	gravedad.posicion.y = 500;
+	gravedad.posicion.x = 500;
 
 
 

@@ -71,7 +71,7 @@ float velocidad_inicial()
 
 
 /**
- * Pide el número de movimientos que se van a calcular al usuario.
+ * Pide el nï¿½mero de movimientos que se van a calcular al usuario.
  */
 int numero_movimientos()
 {

@@ -13,7 +13,8 @@
 
 	typedef struct
 	{
-		TCoordenada coordenadas;
+		float x;
+		float y;
 
 	}TVector;
 
