@@ -5,7 +5,7 @@
 
 #include "coordenadas.h"
 #include "cuerpo.h"
-#include "gravedad.h"
+
 
 
 

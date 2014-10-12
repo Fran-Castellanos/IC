@@ -21,7 +21,6 @@
 
 
 
-
 	TVector sumar_vectores(TVector, TVector);
 
 	float obtener_modulo(TVector);

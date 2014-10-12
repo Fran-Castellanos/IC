@@ -10,10 +10,6 @@
 
 
 
-
-
-
-
 TVector sumar_vectores(TVector v1, TVector v2)
 {
 	TVector v3;

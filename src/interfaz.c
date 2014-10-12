@@ -8,7 +8,8 @@
 
 #include "interfaz.h"
 #include <stdio.h>
-#include "stdlib.h"
+#include <stdlib.h>
+#include <string.h>
 
 /**
  * Pide numero de cuerpos al usuario
@@ -100,10 +101,10 @@ float fuerza_gravedad()
 
 
 
-char* imprimir(TCoordenada* coord){
+void imprimir(TCoordenada* coord, char* linea){
 
 	char aux[100];
-	char linea [100] = "";
+
 	itoa(coord->x, linea, 10 );
 
 	strcat(linea, ",");
@@ -111,7 +112,6 @@ char* imprimir(TCoordenada* coord){
 	strcat(linea,aux);
 	strcat(linea, "\t");
 
-	return linea;
 }
 
 

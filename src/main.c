@@ -5,15 +5,20 @@
  */
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "coordenadas.h"
 #include "gravedad.h"
 #include "fichero.h"
 #include "interfaz.h"
 #include "cuerpo.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+
+
 
 
 typedef struct
@@ -30,7 +35,7 @@ typedef struct
 
 
 void rellenar_parametros(TParametros*);
-void ejecutar(TParametros*);
+void ejecutar(TParametros*, int);
 void liberar(TParametros*);
 void imprimir_parametros(TParametros*);
 
@@ -41,13 +46,17 @@ void imprimir_parametros(TParametros*);
  */
 int main(int argc, char *argv[]){
 
+	int opcion=0;
+	if(argc>1)
+		opcion= 1;
+	printf("Se ha elegido la opcion %d\n",opcion);
 	TParametros param;
 	rellenar_parametros(&param);
 
 	//TODO Imprime los parámetros iniciales para comprobar que funciona bien
 	imprimir_parametros(&param);
 
-	ejecutar(&param);
+	ejecutar(&param, opcion);
 
 
 
@@ -69,67 +78,96 @@ int main(int argc, char *argv[]){
 /*
  * Ejecución principal del programa
  */
-void ejecutar(TParametros* param)
+void ejecutar(TParametros* param, int fich)
 {
 	//int tam = 0;
 	char *linea = ""; //Texto de prueba
 	FILE* fichero;
-	fichero = fopen ( "posiciones.txt", "w");
+	int repeticiones = 1,r;
+	int movimientos;
+	if(fich){
+		fichero = fopen ( "posiciones.txt", "w");
 
-	linea = malloc(100);
+		linea = malloc(100);
+	}
 
 
-
+	clock_t inicio;
+	clock_t fin, tiempo = 0.0;
 
 
 	 //--------------------------------Número de cuerpos---------------------------
-	itoa(param->numeroCuerpos,linea,10);
+	if(fich){
+		itoa(param->numeroCuerpos,linea,10);
+		guardar_en_fichero(fichero,linea);
+		guardar_en_fichero(fichero,"\n");
 
-	guardar_en_fichero(fichero,linea);
-	guardar_en_fichero(fichero,"\n");
+
+		imprimir(&(param->gravedad.posicion), linea);
+
+		 //------------------------Posición del punto de gravedad----------------------
+		guardar_en_fichero(fichero,linea);
+		guardar_en_fichero(fichero,"\n");
+		movimientos = param->numeroMovimientos;
+	}else{
+		printf("\nNUMERO DE CUERPOS: %d\n", param->numeroCuerpos);
+		movimientos = 64;
+		repeticiones = 18;
+	}
+
+	//Si queremos hacer muchas ejecuciones con diferente numero de movimientos, repeticiones
+	//será el número de repeticiones que se harán, comenzando por 64 y multiplicando por 2
+	//en cada iteracion.
+	for(r=0; r<repeticiones; r++){
+		int i,c;
+		for(i=0; i<movimientos;i++)
+		{
+			if(fich)
+				strcpy(linea,"");
+			for (c=0; c<param->numeroCuerpos; c++){
+
+				if(fich){
+					imprimir(&(param->cuerpos[c].posicion), linea);
+					double l = strlen(linea);
+
+					linea = malloc(l+10);
+				}
 
 
-	strcpy(linea, imprimir(&(param->gravedad.posicion)));
+				inicio = clock();
+				aplicar_gravedad(&(param->cuerpos[c]), &(param->gravedad), param->tam);
+				fin = clock();
+				tiempo += fin-inicio;
 
-	 //------------------------Posición del punto de gravedad----------------------
-	guardar_en_fichero(fichero,linea);
-	guardar_en_fichero(fichero,"\n");
+			}
+			if(fich){
 
-//	tam = (abs(param->gravedad.posicion.x) > abs(param->gravedad.posicion.y))? abs(param->gravedad.posicion.x) : abs(param->gravedad.posicion.y);
-
-	int i,c;
-	for(i=0; i<param->numeroMovimientos;i++)
-	{
-		strcpy(linea,"");
-		for (c=0; c<param->numeroCuerpos; c++){
-
-			//tam = (abs(param->cuerpos[c].posicion.x) > tam)? abs(param->cuerpos[c].posicion.x) : tam;
-			//tam = (abs(param->cuerpos[c].posicion.y) > tam)? abs(param->cuerpos[c].posicion.y) : tam;
-
-			strcat(linea, imprimir(&(param->cuerpos[c].posicion)));
-			if(strlen(linea) > 100)
-				linea = malloc(sizeof(linea)+100);
-
-			aplicar_gravedad(&(param->cuerpos[c]), &(param->gravedad), param->tam);
+				guardar_en_fichero(fichero,linea);
+				guardar_en_fichero(fichero,"\n");
+			}
 		}
+		if(!fich)
+		{
+			printf("\nMOVIMIENTOS: %d\n", movimientos);
+			movimientos *=2;
+		}
+		printf("\tEl algoritmo ha tardado %f segundos\n", (double)tiempo/CLOCKS_PER_SEC);
+	}
+
+	if(fich){
+	 //------------------------------Tamaño del tablero----------------------------
+		strcpy(linea, "");
+		itoa(1000,linea,10);
 
 		guardar_en_fichero(fichero,linea);
 		guardar_en_fichero(fichero,"\n");
 
+		free(linea);
+
+		fclose(fichero);
 	}
 
-	 //------------------------------Tamaño del tablero----------------------------
-	strcpy(linea, "");
-	itoa(1000,linea,10);
 
-	guardar_en_fichero(fichero,linea);
-	guardar_en_fichero(fichero,"\n");
-
-	free(linea);
-
-
-
-	fclose(fichero);
 }
 
 
