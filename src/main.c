@@ -247,7 +247,7 @@ void rellenar_parametros(TParametros* param)
 
 	//Fuerza de gravedad
 	gravedad.fuerza = fuerza_gravedad();
-	gravedad.posicion.y = 500;
+	gravedad.posicion.y = 250;
 	gravedad.posicion.x = 500;
 
 
