@@ -36,17 +36,8 @@ public class Coordenada {
         String[] aux;
 
         aux = s.split(",");
-
-        System.out.println("s: " + s);
-        System.out.println("aux0: " + aux[0]);
-        System.out.println("aux1: " + aux[1]);
-
         
         String[] aux2 = aux[0].split("\t");
-        
-        System.out.println("s2: " + s);
-        System.out.println("aux02: " + aux2[0]);
-
         
         x = Integer.parseInt(aux2[0]);
         

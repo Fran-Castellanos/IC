@@ -52,7 +52,6 @@ public class Tablero {
                         String[] aux = linea.split("\t");
                         for (String aux1 : aux) {
                             p.addCuerpo(new Coordenada(aux1));
-                            System.out.println("addcuerpo: "+aux1);
                         }
                     }else
                     {
