@@ -67,7 +67,7 @@ public class Dibujo extends Canvas{
          }
          
         try {
-            Thread.sleep(300);
+            Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Dibujo.class.getName()).log(Level.SEVERE, null, ex);
         }
