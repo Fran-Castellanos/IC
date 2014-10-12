@@ -31,7 +31,7 @@ int numero_movimientos();
 float fuerza_gravedad();
 
 
-void imprimir(TCoordenada*, char*);
+char* imprimir(TCoordenada*);
 
 
 

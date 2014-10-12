@@ -101,8 +101,8 @@ float fuerza_gravedad()
 
 
 
-void imprimir(TCoordenada* coord, char* linea){
-
+char* imprimir(TCoordenada* coord){
+	char linea[100];
 	char aux[100];
 
 	itoa(coord->x, linea, 10 );
@@ -112,6 +112,7 @@ void imprimir(TCoordenada* coord, char* linea){
 	strcat(linea,aux);
 	strcat(linea, "\t");
 
+	return linea;
 }
 
 

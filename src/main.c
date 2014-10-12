@@ -88,7 +88,7 @@ void ejecutar(TParametros* param, int fich)
 	if(fich){
 		fichero = fopen ( "posiciones.txt", "w");
 
-		linea = malloc(100);
+		linea = malloc(1000);
 	}
 
 
@@ -103,7 +103,7 @@ void ejecutar(TParametros* param, int fich)
 		guardar_en_fichero(fichero,"\n");
 
 
-		imprimir(&(param->gravedad.posicion), linea);
+		strcpy(linea,imprimir(&(param->gravedad.posicion)));
 
 		 //------------------------Posición del punto de gravedad----------------------
 		guardar_en_fichero(fichero,linea);
@@ -127,10 +127,9 @@ void ejecutar(TParametros* param, int fich)
 			for (c=0; c<param->numeroCuerpos; c++){
 
 				if(fich){
-					imprimir(&(param->cuerpos[c].posicion), linea);
-					double l = strlen(linea);
+					strcat(linea,imprimir(&(param->cuerpos[c].posicion)));
 
-					linea = malloc(l+10);
+
 				}
 
 
