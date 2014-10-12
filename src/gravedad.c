@@ -22,10 +22,10 @@ void aplicar_gravedad(TCuerpo* cuerpo, TGravedad* gravedad, int tam)
 
 	gravedad->vector.y = (gravedad->posicion.y<cuerpo->posicion.y )? -1 : +1;
 
-	//float distancia = sqrt(pow(gravedad->vector.x,2 )+pow(gravedad->vector.y,2 ));
+	float distancia = sqrt(pow(gravedad->vector.x,2 )+pow(gravedad->vector.y,2 ));
 
-	gravedad->vector.x *=  abs(gravedad->fuerza * sin(angulo));
-	gravedad->vector.y *=  abs(gravedad->fuerza * cos(angulo));
+	gravedad->vector.x *=  abs(gravedad->fuerza * sin(angulo)) /distancia;
+	gravedad->vector.y *=  abs(gravedad->fuerza * cos(angulo)) /distancia;
 
 
 
