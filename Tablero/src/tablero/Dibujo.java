@@ -8,7 +8,6 @@ package tablero;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class Dibujo extends Canvas{
     
-    private Parametros p;
+    private final Parametros p;
     private int indice;
     
     public Dibujo(Parametros p)
@@ -41,8 +40,6 @@ public class Dibujo extends Canvas{
 
     @Override
     public void paint(Graphics g) {
-
-        //BufferedImage imagen = new BufferedImage (getWidth(), getHeight(),255);
         
         ArrayList<Color> color = new ArrayList();
         
@@ -55,7 +52,7 @@ public class Dibujo extends Canvas{
 
         
          g.setColor(Color.red);
-         g.fillRect(p.getGravedad().getY(), p.getGravedad().getX(), 5*p.getTamano()/100, 5*p.getTamano()/100);
+         g.fillRect(p.getGravedad().getX(), p.getGravedad().getY(), 25, 25);
          
          
          int k = indice;
@@ -64,16 +61,13 @@ public class Dibujo extends Canvas{
          {
              g.setColor(color.get(i%color.size()));
              
-             g.fillRect(p.getCuerpo(indice).getY(),p.getCuerpo(indice).getX(),5*p.getTamano()/100, 5*p.getTamano()/100 );
+             g.fillRect(p.getCuerpo(indice).getX(),p.getCuerpo(indice).getY(), 25, 25);
              indice++;
             
          }
          
-         //g.drawImage(imagen, 0, 0, this);
-
-         
         try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
         } catch (InterruptedException ex) {
             Logger.getLogger(Dibujo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,7 +77,7 @@ public class Dibujo extends Canvas{
             for(int i = 0; i< p.getNumeroCuerpos();i++)
              {
 
-                 g.clearRect(p.getCuerpo(k).getY(),p.getCuerpo(k).getX(),5*p.getTamano()/100, 5*p.getTamano()/100 );
+                 g.clearRect(p.getCuerpo(k).getX(),p.getCuerpo(k).getY(), 25, 25);
                  k++;
              }
         

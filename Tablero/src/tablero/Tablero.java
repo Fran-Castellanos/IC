@@ -71,12 +71,7 @@ public class Tablero {
                 Logger.getLogger(Tablero.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-
-
-
-
-            
-        
+      
         }
     }
     

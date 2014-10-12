@@ -5,13 +5,6 @@
  */
 package tablero;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -22,7 +15,7 @@ public class Ventana extends JFrame {
     
     
     public Ventana(Parametros p){
-        setSize(p.getTamano(),p.getTamano());
+        setSize(1000,1000);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -30,12 +23,6 @@ public class Ventana extends JFrame {
         int i=0;
            
         add(new Dibujo(p));
-
         
-        
-        
-        
-    }
-    
-    
+    }    
 }
