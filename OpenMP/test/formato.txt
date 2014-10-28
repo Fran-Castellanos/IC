@@ -1,0 +1,5 @@
+numero cuerpos
+velocidad
+posicion de los cuerpos
+numero de movimientos
+fuerza de gravedad
