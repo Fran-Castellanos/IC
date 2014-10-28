@@ -17,6 +17,8 @@
 #include <string.h>
 #include <time.h>
 
+#include <omp.h>
+
 
 
 
@@ -53,7 +55,7 @@ int main(int argc, char *argv[]){
 	TParametros param;
 	rellenar_parametros(&param);
 
-	//TODO Imprime los parámetros iniciales para comprobar que funciona bien
+
 	imprimir_parametros(&param);
 
 	ejecutar(&param, opcion);
@@ -124,6 +126,7 @@ void ejecutar(TParametros* param, int fich)
 		{
 			if(fich)
 				strcpy(linea,"");
+
 			for (c=0; c<param->numeroCuerpos; c++){
 
 				if(fich){
