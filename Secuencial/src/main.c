@@ -6,11 +6,11 @@
 
 
 
-#include "coordenadas.h"
-#include "gravedad.h"
-#include "fichero.h"
-#include "interfaz.h"
-#include "cuerpo.h"
+#include "../lib/coordenadas.h"
+#include "../lib/gravedad.h"
+#include "../lib/fichero.h"
+#include "../lib/interfaz.h"
+#include "../lib/cuerpo.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -120,41 +120,47 @@ void ejecutar(TParametros* param, int fich)
 	//Si queremos hacer muchas ejecuciones con diferente numero de movimientos, repeticiones
 	//será el número de repeticiones que se harán, comenzando por 64 y multiplicando por 2
 	//en cada iteracion.
-	for(r=0; r<repeticiones; r++){
-		int i,c;
-		for(i=0; i<movimientos;i++)
-		{
-			if(fich)
-				strcpy(linea,"");
 
-			for (c=0; c<param->numeroCuerpos; c++){
 
-				if(fich){
-					strcat(linea,imprimir(&(param->cuerpos[c].posicion)));
 
+#pragma omp parallel for
+		for(r=0; r<repeticiones; r++){
+			int i,c;
+
+			for(i=0; i<movimientos;i++)
+			{
+				if(fich)
+					strcpy(linea,"");
+
+				for (c=0; c<param->numeroCuerpos; c++){
+
+					if(fich){
+						strcat(linea,imprimir(&(param->cuerpos[c].posicion)));
+
+
+					}
+
+
+					inicio = clock();
+					aplicar_gravedad(&(param->cuerpos[c]), &(param->gravedad), param->tam);
+					fin = clock();
+					tiempo += fin-inicio;
 
 				}
+				if(fich){
 
-
-				inicio = clock();
-				aplicar_gravedad(&(param->cuerpos[c]), &(param->gravedad), param->tam);
-				fin = clock();
-				tiempo += fin-inicio;
-
+					guardar_en_fichero(fichero,linea);
+					guardar_en_fichero(fichero,"\n");
+				}
 			}
-			if(fich){
-
-				guardar_en_fichero(fichero,linea);
-				guardar_en_fichero(fichero,"\n");
+			if(!fich)
+			{
+				printf("\nMOVIMIENTOS: %d\n", movimientos);
+				movimientos *=2;
 			}
+			printf("\tEl algoritmo ha tardado %f segundos\n", (double)tiempo/CLOCKS_PER_SEC);
 		}
-		if(!fich)
-		{
-			printf("\nMOVIMIENTOS: %d\n", movimientos);
-			movimientos *=2;
-		}
-		printf("\tEl algoritmo ha tardado %f segundos\n", (double)tiempo/CLOCKS_PER_SEC);
-	}
+
 
 	if(fich){
 	 //------------------------------Tamaño del tablero----------------------------

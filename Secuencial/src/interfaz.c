@@ -6,7 +6,7 @@
  */
 
 
-#include "interfaz.h"
+#include "../lib/interfaz.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

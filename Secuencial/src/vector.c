@@ -5,7 +5,7 @@
  *      Author: Paco
  */
 
-#include "vector.h"
+#include "../lib/vector.h"
 #include <math.h>
 
 

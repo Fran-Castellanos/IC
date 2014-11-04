@@ -5,8 +5,8 @@
 #include <stdlib.h>
 
 
-#include "gravedad.h"
-#include "vector.h"
+#include "../lib/gravedad.h"
+#include "../lib/vector.h"
 
 
 void aplicar_gravedad(TCuerpo* cuerpo, TGravedad* gravedad, int tam)
