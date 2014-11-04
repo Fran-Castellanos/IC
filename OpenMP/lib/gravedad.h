@@ -1,6 +1,6 @@
 
-#ifndef NCUERPOSPROJECTSECUENCIAL_LIB_GRAVEDAD_H_
-#define NCUERPOSPROJECTSECUENCIAL_LIB_GRAVEDAD_H_
+#ifndef NCUERPOSPROJECTOPENMP_LIB_GRAVEDAD_H_
+#define NCUERPOSPROJECTOPENMP_LIB_GRAVEDAD_H_
 
 
 #include "coordenadas.h"
@@ -23,4 +23,4 @@ float gravedad_x(TCuerpo*, TGravedad*, int);
 float gravedad_y(TCuerpo*, TGravedad*, int);
 
 
-#endif /* NCUERPOSPROJECTSECUENCIAL_LIB_GRAVEDAD_H_ */
+#endif /* NCUERPOSPROJECTOPENMP_LIB_GRAVEDAD_H_ */
