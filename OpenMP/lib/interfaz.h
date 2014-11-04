@@ -4,8 +4,8 @@
  *  Created on: 2/10/2014
  */
 
-#ifndef LIB_INTERFAZ_H_
-#define LIB_INTERFAZ_H_
+#ifndef NCUERPOSPROJECTSECUENCIAL_LIB_INTERFAZ_H_
+#define NCUERPOSPROJECTSECUENCIAL_LIB_INTERFAZ_H_
 
 
 #include "cuerpo.h"
@@ -36,4 +36,4 @@ char* imprimir(TCoordenada*);
 
 
 
-#endif /* LIB_INTERFAZ_H_ */
+#endif /* NCUERPOSPROJECTSECUENCIAL_LIB_INTERFAZ_H_ */

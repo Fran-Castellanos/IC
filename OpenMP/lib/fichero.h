@@ -1,6 +1,6 @@
 
-#ifndef LIB_FICHERO_H_
-#define LIB_FICHERO_H_
+#ifndef NCUERPOSPROJECTSECUENCIAL_LIB_FICHERO_H_
+#define NCUERPOSPROJECTSECUENCIAL_LIB_FICHERO_H_
 
 
 #include <stdio.h>
@@ -11,4 +11,4 @@ void guardar_en_fichero(FILE*, char*);
 
 
 
-#endif /* LIB_FICHERO_H_ */
+#endif /* NCUERPOSPROJECTSECUENCIAL_LIB_FICHERO_H_ */

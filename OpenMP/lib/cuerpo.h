@@ -1,6 +1,6 @@
 
-#ifndef LIB_CUERPO_H_
-#define LIB_CUERPO_H_
+#ifndef NCUERPOSPROJECTSECUENCIAL_LIB_CUERPO_H_
+#define NCUERPOSPROJECTSECUENCIAL_LIB_CUERPO_H_
 
 #include "coordenadas.h"
 #include "vector.h"
@@ -15,4 +15,4 @@ typedef struct{
 
 
 
-#endif /* LIB_CUERPO_H_ */
+#endif /* NCUERPOSPROJECTSECUENCIAL_LIB_CUERPO_H_ */

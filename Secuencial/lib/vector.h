@@ -5,8 +5,8 @@
  *      Author: Paco
  */
 
-#ifndef LIB_VECTOR_H_
-#define LIB_VECTOR_H_
+#ifndef NCUERPOSPROJECTOPENMP_LIB_VECTOR_H_
+#define NCUERPOSPROJECTOPENMP_LIB_VECTOR_H_
 
 
 #include "coordenadas.h"
@@ -32,4 +32,4 @@
 
 
 
-#endif /* LIB_VECTOR_H_ */
+#endif /* NCUERPOSPROJECTOPENMP_LIB_VECTOR_H_ */
