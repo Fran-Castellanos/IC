@@ -138,7 +138,7 @@ void ejecutar(TParametros* param, int fich)
 
 
 					inicio = clock();
-					aplicar_gravedad(&(param->cuerpos[c]), &(param->gravedad), param->tam);
+					aplicar_gravedad(&(param->cuerpos[c]), &(param->gravedad));
 					fin = clock();
 					tiempo += fin-inicio;
 

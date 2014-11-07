@@ -9,7 +9,7 @@
 #include "../lib/vector.h"
 
 
-void aplicar_gravedad(TCuerpo* cuerpo, TGravedad* gravedad, int tam)
+void aplicar_gravedad(TCuerpo* cuerpo, TGravedad* gravedad)
 {
 
 	double m = ((float)(gravedad->posicion.y - cuerpo->posicion.y ) / (float)(gravedad->posicion.x - cuerpo->posicion.x));
@@ -42,7 +42,7 @@ void aplicar_gravedad(TCuerpo* cuerpo, TGravedad* gravedad, int tam)
 
 
 
-float gravedad_x(TCuerpo* cuerpo, TGravedad* gravedad, int tam){
+float gravedad_x(TCuerpo* cuerpo, TGravedad* gravedad){
 	int incremento;
 
 	incremento = cuerpo->vector.x;
@@ -54,7 +54,7 @@ float gravedad_x(TCuerpo* cuerpo, TGravedad* gravedad, int tam){
 
 
 
-float gravedad_y(TCuerpo* cuerpo, TGravedad* gravedad, int tam)
+float gravedad_y(TCuerpo* cuerpo, TGravedad* gravedad)
 {
 	int incremento;
 
