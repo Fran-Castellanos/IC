@@ -131,21 +131,20 @@ void ejecutar(TParametros* param, int fich)
 	omp_set_num_threads (procesadores);
 
 		for(r=0; r<repeticiones; r++){
-			printf("Prueba %d\n",r);
 			TCoordenada **coordenadas = crear_matriz(param->numeroCuerpos, movimientos);
 			int c=0;
 			int i=0;
 
 			inicio = clock();
 
-			printf("\tMovimientos: %d\n",movimientos);
+
 			//Paralelizamos el calculo de los movimientos de cada cuerpo
 			#pragma omp parallel for private(i)
 			for(c=0; c<param->numeroCuerpos; c++)
 			{
 				for (i=0; i<movimientos;i++){
 
-					aplicar_gravedad(&(param->cuerpos[c]), &(param->gravedad), param->tam);
+					aplicar_gravedad(&(param->cuerpos[c]), &(param->gravedad));
 					coordenadas[c][i] = param->cuerpos[c].posicion;
 
 				}
