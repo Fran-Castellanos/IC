@@ -12,31 +12,31 @@
 void aplicar_gravedad(TCuerpo* cuerpo, TGravedad* gravedad)
 {
 
-	double m = ((float)(gravedad->posicion.y - cuerpo->posicion.y ) / (float)(gravedad->posicion.x - cuerpo->posicion.x));
-	double angulo = atan(m);
+		double m = ((float)(gravedad->posicion.y - cuerpo->posicion.y ) / (float)(gravedad->posicion.x - cuerpo->posicion.x));
+		double angulo = atan(m);
 
 
 
-	gravedad->vector.x = (gravedad->posicion.x< cuerpo->posicion.x ) ? -1 : +1;
+		gravedad->vector.x = (gravedad->posicion.x< cuerpo->posicion.x ) ? -1 : +1;
 
 
-	gravedad->vector.y = (gravedad->posicion.y<cuerpo->posicion.y )? -1 : +1;
+		gravedad->vector.y = (gravedad->posicion.y<cuerpo->posicion.y )? -1 : +1;
 
-	float distancia = sqrt(pow(gravedad->posicion.x - cuerpo->posicion.x,2 )+pow(gravedad->posicion.y - cuerpo->posicion.y,2 ));
+		float distancia = sqrt(pow(gravedad->posicion.x - cuerpo->posicion.x,2 )+pow(gravedad->posicion.y - cuerpo->posicion.y,2 ));
 
-	gravedad->vector.x *=  abs(gravedad->fuerza * sin(angulo)) /distancia;
-	gravedad->vector.y *=  abs(gravedad->fuerza * cos(angulo)) /distancia;
-
-
-
-	TVector v = sumar_vectores(cuerpo->vector, gravedad->vector);
-
-	cuerpo->vector.x = v.x;
-	cuerpo->vector.y = v.y;
+		gravedad->vector.x *=  abs(gravedad->fuerza * sin(angulo)) /distancia;
+		gravedad->vector.y *=  abs(gravedad->fuerza * cos(angulo)) /distancia;
 
 
-	cuerpo->posicion.x = cuerpo->posicion.x + cuerpo->vector.x;
-	cuerpo->posicion.y = cuerpo->posicion.y + cuerpo->vector.y;
+
+		TVector v = sumar_vectores(cuerpo->vector, gravedad->vector);
+
+		cuerpo->vector.x = v.x;
+		cuerpo->vector.y = v.y;
+
+
+		cuerpo->posicion.x = cuerpo->posicion.x + cuerpo->vector.x;
+		cuerpo->posicion.y = cuerpo->posicion.y + cuerpo->vector.y;
 
 }
 
