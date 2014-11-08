@@ -21,6 +21,7 @@
 
 
 
+
 typedef struct
 {
 	float velocidad; //Velocidad inicial
@@ -39,6 +40,8 @@ void ejecutar(TParametros*, int);
 void liberar(TParametros*);
 void imprimir_parametros(TParametros*);
 
+int **crear_matriz(unsigned long, unsigned long);
+void destruir_matriz(TCoordenada **, unsigned long, unsigned long);
 
 
 /*
@@ -84,12 +87,15 @@ void ejecutar(TParametros* param, int fich)
 	char *linea = ""; //Texto de prueba
 	FILE* fichero;
 	int repeticiones = 1,r;
-	int movimientos;
+	unsigned long movimientos;
+	unsigned long numeroCuerpos = param->numeroCuerpos;
 	if(fich){
 		fichero = fopen ( "posiciones.txt", "w");
 
 		linea = malloc(1000);
 	}
+
+
 
 
 	clock_t inicio;
@@ -115,46 +121,58 @@ void ejecutar(TParametros* param, int fich)
 		repeticiones = 18;
 	}
 
+
 	//Si queremos hacer muchas ejecuciones con diferente numero de movimientos, repeticiones
 	//será el número de repeticiones que se harán, comenzando por 64 y multiplicando por 2
 	//en cada iteracion.
 
-
 		for(r=0; r<repeticiones; r++){
-			int i,c;
 
-			for(i=0; i<movimientos;i++)
+			TCoordenada **coordenadas = crear_matriz(numeroCuerpos, movimientos);
+
+			unsigned long c=0;
+			unsigned long i=0;
+
+			inicio = clock();
+
+			for(c=0; c<param->numeroCuerpos; c++)
 			{
-				if(fich)
-					strcpy(linea,"");
-
-				for (c=0; c<param->numeroCuerpos; c++){
-
-					if(fich){
-						strcat(linea,imprimir(&(param->cuerpos[c].posicion)));
-
-
-					}
-
-
-					inicio = clock();
+				for (i=0; i<movimientos;i++){
 					aplicar_gravedad(&(param->cuerpos[c]), &(param->gravedad));
-					fin = clock();
-					tiempo += fin-inicio;
+					if(fich)
+						coordenadas[c][i] = param->cuerpos[c].posicion;
 
 				}
-				if(fich){
+			}
 
+			fin = clock();
+			tiempo = fin-inicio;
+
+
+			if(fich){
+
+
+				int f = 0;
+				int cuerpo = 0;
+				for(f=0; f<param->numeroMovimientos; f++){
+					strcpy(linea,"");
+					for(cuerpo=0; cuerpo<param->numeroCuerpos; cuerpo++){
+						strcat(linea,imprimir(&(coordenadas[cuerpo][f])));
+					}
 					guardar_en_fichero(fichero,linea);
 					guardar_en_fichero(fichero,"\n");
 				}
 			}
-			if(!fich)
-			{
+
+			//Libera memoria dinamica del array bidimensional de coordenadas
+			destruir_matriz(coordenadas, numeroCuerpos, movimientos );
+
+			if(!fich){
 				printf("\nMOVIMIENTOS: %d\n", movimientos);
 				movimientos *=2;
 			}
 			printf("\tEl algoritmo ha tardado %f segundos\n", (double)tiempo/CLOCKS_PER_SEC);
+
 		}
 
 
@@ -174,6 +192,37 @@ void ejecutar(TParametros* param, int fich)
 
 }
 
+
+
+//Crea matriz dinamica
+int **crear_matriz(unsigned long n, unsigned long m) {
+    /**
+     * Crea una matriz dinamica (malloc) de n por m
+     */
+    int i;
+    int **matriz = (int **)malloc(sizeof(TCoordenada *) * n);
+
+    for (i = 0; i < n; i++) {
+        matriz[i] = (int *)malloc(sizeof(TCoordenada) * m);
+    }
+
+    return matriz;
+}
+
+
+//Libera memoria dinamica de una matriz
+void destruir_matriz(TCoordenada **matriz, unsigned long n, unsigned long m) {
+    /**
+     * Destruye (libera la memoria dinamica) la matriz de n por m
+     */
+    int i;
+
+    for (i = 0; i < n; i++) {
+        free(matriz[i]);
+    }
+
+    free(matriz);
+}
 
 
 

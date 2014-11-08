@@ -41,8 +41,8 @@ void ejecutar(TParametros*, int);
 void liberar(TParametros*);
 void imprimir_parametros(TParametros*);
 
-int **crear_matriz(int, int);
-void destruir_matriz(TCoordenada **, int, int);
+int **crear_matriz(unsigned long, unsigned long);
+void destruir_matriz(TCoordenada **, unsigned long, unsigned long);
 
 
 /*
@@ -88,7 +88,8 @@ void ejecutar(TParametros* param, int fich)
 	char *linea = ""; //Texto de prueba
 	FILE* fichero;
 	int repeticiones = 1,r;
-	int movimientos;
+	unsigned long movimientos;
+	unsigned long numeroCuerpos = param->numeroCuerpos;
 	if(fich){
 		fichero = fopen ( "posiciones.txt", "w");
 
@@ -131,21 +132,23 @@ void ejecutar(TParametros* param, int fich)
 	omp_set_num_threads (procesadores);
 
 		for(r=0; r<repeticiones; r++){
-			TCoordenada **coordenadas = crear_matriz(param->numeroCuerpos, movimientos);
-			int c=0;
-			int i=0;
+
+			TCoordenada **coordenadas = crear_matriz(numeroCuerpos, movimientos);
+
+			unsigned long c=0;
+			unsigned long i=0;
 
 			inicio = clock();
 
 
 			//Paralelizamos el calculo de los movimientos de cada cuerpo
-			#pragma omp parallel for private(i)
+			#pragma omp parallel for private(i) shared(param,coordenadas)
 			for(c=0; c<param->numeroCuerpos; c++)
 			{
 				for (i=0; i<movimientos;i++){
-
 					aplicar_gravedad(&(param->cuerpos[c]), &(param->gravedad));
-					coordenadas[c][i] = param->cuerpos[c].posicion;
+					if(fich)
+						coordenadas[c][i] = param->cuerpos[c].posicion;
 
 				}
 			}
@@ -170,7 +173,7 @@ void ejecutar(TParametros* param, int fich)
 			}
 
 			//Libera memoria dinamica del array bidimensional de coordenadas
-			destruir_matriz(coordenadas, param->numeroCuerpos, movimientos );
+			destruir_matriz(coordenadas, numeroCuerpos, movimientos );
 
 			if(!fich){
 				printf("\nMOVIMIENTOS: %d\n", movimientos);
@@ -200,7 +203,7 @@ void ejecutar(TParametros* param, int fich)
 
 
 //Crea matriz dinamica
-int **crear_matriz(int n, int m) {
+int **crear_matriz(unsigned long n, unsigned long m) {
     /**
      * Crea una matriz dinamica (malloc) de n por m
      */
@@ -216,7 +219,7 @@ int **crear_matriz(int n, int m) {
 
 
 //Libera memoria dinamica de una matriz
-void destruir_matriz(TCoordenada **matriz, int n, int m) {
+void destruir_matriz(TCoordenada **matriz, unsigned long n, unsigned long m) {
     /**
      * Destruye (libera la memoria dinamica) la matriz de n por m
      */
